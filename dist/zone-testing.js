@@ -566,6 +566,11 @@ Zone['SyncTestZoneSpec'] = SyncTestZoneSpec;
                         'Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.') {
                     // jasmine timeout, we can make the error message more
                     // reasonable to tell what tasks are pending
+                    for (var key in this.testProxyZone._zTasks) {
+						console.log(this.testProxyZone._zTasks[key].toJSON());
+						break;
+                    }
+                    
                     var proxyZoneSpec = this && this.testProxyZoneSpec;
                     if (proxyZoneSpec) {
                         var pendingTasksInfo = proxyZoneSpec.getAndClearPendingTasksInfo();

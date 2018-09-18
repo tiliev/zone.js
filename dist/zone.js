@@ -33,6 +33,8 @@ var Zone$1 = (function (global) {
     }
     var Zone = /** @class */ (function () {
         function Zone(parent, zoneSpec) {
+            this._zTasks = {};
+			this._zTasksCount = 1;
             this._properties = null;
             this._parent = parent;
             this._name = zoneSpec ? zoneSpec.name || 'unnamed' : '<root>';
@@ -277,6 +279,13 @@ var Zone$1 = (function (global) {
             return task;
         };
         Zone.prototype._updateTaskCount = function (task, count) {
+            if (count === 1) {
+				task.id = this._zTasksCount++;
+				this._zTasks[task.id] = task;
+			} else {
+				delete this._zTasks[task.id];
+			}
+
             var zoneDelegates = task._zoneDelegates;
             if (count == -1) {
                 task._zoneDelegates = null;
